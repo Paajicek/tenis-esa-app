@@ -2,12 +2,13 @@ import streamlit as st
 import pandas as pd
 import mysql.connector
 import gspread
+import json
 from oauth2client.service_account import ServiceAccountCredentials
 
 # --- Google Sheets setup ---
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive.file", "https://www.googleapis.com/auth/drive"]
-import json
-creds_dict = json.loads(st.secrets["gcp_service_account"])
+with open("aceapp-460119-b692dcaf1269.json") as source:
+    creds_dict = json.load(source)
 creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
 client = gspread.authorize(creds)
 sheet = client.open("Aceapp").worksheet("Esa výsledky")
