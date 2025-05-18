@@ -6,7 +6,9 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 # --- Google Sheets setup ---
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive.file", "https://www.googleapis.com/auth/drive"]
-creds = ServiceAccountCredentials.from_json_keyfile_name("aceapp-460119-b692dcaf1269.json", scope)
+import json
+creds_dict = json.loads(st.secrets["gcp_service_account"])
+creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
 client = gspread.authorize(creds)
 sheet = client.open("Aceapp").worksheet("Esa výsledky")
 
